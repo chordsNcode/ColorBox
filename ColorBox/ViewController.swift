@@ -49,7 +49,7 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         NSLog("Starting gravity")
-        motionManager.startDeviceMotionUpdates(to: motionQueue, withHandler: gravityUpdated as! CMDeviceMotionHandler)
+        motionManager.startDeviceMotionUpdates(to: motionQueue, withHandler: gravityUpdated)
     }
     
     override func viewDidDisappear(_ animated: Bool)  {
@@ -64,9 +64,9 @@ class ViewController: UIViewController {
     }
     
     //----------------- Core Motion
-    func gravityUpdated(_ motion: CMDeviceMotion!, error: NSError!) {
+    func gravityUpdated(_ motion: CMDeviceMotion?, error: Error?) {
         detectCollisions()
-        let grav : CMAcceleration = motion.gravity;
+        let grav : CMAcceleration = (motion?.gravity)!;
         
         let x = CGFloat(grav.x);
         let y = CGFloat(grav.y);
